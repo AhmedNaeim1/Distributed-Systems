@@ -10,8 +10,6 @@ public class bookings {
     private Date checkInDate;
     private Date checkOutDate;
 
-    public bookings() {
-    }
 
     public bookings(long bookingID, Date checkInDate, rooms room, Date checkOutDate, users customer) {
         this.bookingID = bookingID;

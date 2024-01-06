@@ -7,8 +7,6 @@ public class rooms {
     private String roomType;
     private Boolean availability;
 
-    public rooms() {
-    }
 
     public rooms(long RoomID, String roomType, int price, Boolean availability) {
         this.RoomID = RoomID;
