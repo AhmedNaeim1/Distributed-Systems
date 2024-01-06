@@ -2,8 +2,11 @@ package com.AhmedNaeim.assignment3.Controller;
 
 import com.AhmedNaeim.assignment3.Server.hotelService;
 import com.AhmedNaeim.assignment3.model.users;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -17,27 +20,44 @@ public class admin {
         this.hotelService = hotelService;
     }
 
-    @GetMapping("/getEmployee")
-    public List<users> getAllEmployees() {
-        return hotelService.getAllEmployees();
+    @GetMapping("/getEmployees")
+    public ResponseEntity<List<users>> getAllEmployees() {
+        try {
+            List<users> result = hotelService.getAllEmployees();
+            return ResponseEntity.ok(result);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
+        }
     }
-
 
     @PostMapping("/addEmployee")
-    public users addEmployee(@RequestBody users e) {
-        return hotelService.addEmployee(e.getName(), e.getPassword(), e.getRole());
+    public ResponseEntity<users> addEmployee(@RequestBody users e) {
+        try {
+            users result = hotelService.addEmployee(e.getName(), e.getPassword(), e.getRole());
+            return ResponseEntity.ok(result);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
-
 
     @GetMapping("/getEmployee/{id}")
-    public users getEmployee(@PathVariable int id) {
-        return hotelService.getEmployee(id);
+    public ResponseEntity<users> getEmployee(@PathVariable int id) {
+        try {
+            users result = hotelService.getEmployee(id);
+            return ResponseEntity.ok(result);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
-
     @DeleteMapping("/employee/{id}")
-    public Boolean deleteEmployee(@PathVariable int id) {
-        return hotelService.deleteEmployee(id);
+    public ResponseEntity<Boolean> deleteEmployee(@PathVariable int id) {
+        try {
+            Boolean result = hotelService.deleteEmployee(id);
+            return ResponseEntity.ok(result);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        }
     }
 
 //    @GetMapping("/users")
