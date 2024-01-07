@@ -23,9 +23,9 @@ public class managers {
     }
 
     @GetMapping("/getBookings")
-    public ResponseEntity<List<Boolean>> getRoomsOccupancy() {
+    public ResponseEntity<List<List>> getRoomsOccupancy() {
         try {
-            List<Boolean> result = hotelService.getRoomsOccupancy();
+            List<List> result = hotelService.getRoomsOccupancy();
             return ResponseEntity.ok(result);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());

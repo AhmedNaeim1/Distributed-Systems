@@ -1,6 +1,7 @@
 package com.AhmedNaeim.assignment3.Controller;
 
 import com.AhmedNaeim.assignment3.Server.hotelService;
+import com.AhmedNaeim.assignment3.model.book;
 import com.AhmedNaeim.assignment3.model.bookings;
 import com.AhmedNaeim.assignment3.model.users;
 import org.springframework.http.HttpStatus;
@@ -52,9 +53,9 @@ public class customers {
     }
 
     @PostMapping("/bookRoom")
-    public ResponseEntity<String> bookRoom(@RequestBody bookings e) {
+    public ResponseEntity<String> bookRoom(@RequestBody book e) {
         try {
-            String result = hotelService.addBooking(e.getRoom(), e.getCustomer(), e.getCheckInDate(), e.getCheckOutDate());
+            String result = hotelService.addBooking(e.getRoomID(), e.getCustomerID(), e.getCheckInDate(), e.getCheckOutDate());
             return ResponseEntity.ok(result);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during booking.");

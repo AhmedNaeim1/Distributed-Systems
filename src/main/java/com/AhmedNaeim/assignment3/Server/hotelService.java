@@ -3,11 +3,13 @@ package com.AhmedNaeim.assignment3.Server;
 import com.AhmedNaeim.assignment3.model.bookings;
 import com.AhmedNaeim.assignment3.model.users;
 import com.AhmedNaeim.assignment3.model.rooms;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+
 public class hotelService {
     private static final Object lock = new Object();
     private static final List<users> staff = new ArrayList<>();
@@ -17,12 +19,14 @@ public class hotelService {
 
     static {
         {
-//            staff.add(new users(1, "ahmed", "sawsan", "manager"));
-//            staff.add(new users(5, "khaled", "sawsan", "admins"));
-//            staff.add(new users(2, "mohamed", "sawsan", "receptionist"));
-//            staff.add(new users(3, "ali", "sawsan", "receptionist"));
-//            staff.add(new users(4, "ola", "sawsan", "customer"));
-
+            staff.add(new users(0, "khaled", "ahmed", "admins"));
+            customers.add(new users(1, "khaled", "ahmed", "customer"));
+            room.add(new rooms(1, "Double", 200, true));
+            room.add(new rooms(2, "Single", 200, true));
+            room.add(new rooms(3, "Double", 200, true));
+            room.add(new rooms(4, "Single", 200, true));
+            room.add(new rooms(5, "Double", 200, true));
+            room.add(new rooms(6, "Single", 200, true));
         }
     }
 
@@ -46,16 +50,15 @@ public class hotelService {
 
     }
 
-    public List<Boolean> getRoomsOccupancy() {
-        final List<Boolean> roomsList = new ArrayList<>();
+
+    public List<List> getRoomsOccupancy() {
+        final List<List> roomsList = new ArrayList<>();
 
         for (int i = 0; i < room.size(); i++) {
-
-            roomsList.add(room.get(i).getAvailability());
-
+            List<Object> x = Arrays.asList(room.get(i).getRoomID(), room.get(i).getAvailability());
+            roomsList.add(x);
         }
         return roomsList;
-
     }
 
     public boolean getRoomAvailability(int id) {
@@ -88,7 +91,6 @@ public class hotelService {
 
     public bookings viewBooking(int id) {
 
-
         return booking.stream()
                 .filter(e -> Objects.equals(e.getBookingID(), id))
                 .findFirst()
@@ -104,16 +106,30 @@ public class hotelService {
         }
     }
 
-    public String addBooking(rooms room, users customer, Date checkInDate, Date checkOutDate) {
-        if (room.getAvailability()) {
-            synchronized (lock) {
-                bookings x = new bookings(5, checkInDate, room, checkOutDate, customer);
-                room.setAvailability(false);
-                booking.add(x);
-                return "Booked Successful";
+    public String addBooking(@NotNull long roomID, long customerID, Date checkInDate, Date checkOutDate) {
+        rooms x = room.stream()
+                .filter(e -> Objects.equals(e.getRoomID(), roomID))
+                .findFirst()
+                .orElse(null);
+
+        users z = customers.stream()
+                .filter(e -> Objects.equals(e.getId(), customerID))
+                .findFirst()
+                .orElse(null);
+        if (x != null && x.getAvailability()) {
+            if (z != null) {
+                synchronized (lock) {
+                    bookings y = new bookings(5, checkInDate, x, checkOutDate, z);
+                    x.setAvailability(false);
+                    booking.add(y);
+                    return "Booked Successful";
+
+                }
+            } else {
+                return "User not registered";
             }
         } else {
-            return "Room not available";
+            return "Roon not available";
         }
 
     }
