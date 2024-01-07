@@ -38,7 +38,7 @@ public class hotelService {
         return booking;
     }
 
-    public List<bookings> getRoomBookings(int id) {
+    public List<bookings> getRoomBookings(long id) {
         final List<bookings> bookingsList = new ArrayList<>();
 
         for (int i = 0; i < booking.size(); i++) {

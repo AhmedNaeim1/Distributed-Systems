@@ -41,7 +41,7 @@ public class receptionists {
     }
 
     @GetMapping("/getBookings/{roomId}")
-    public ResponseEntity<List<bookings>> getRoomBookings(@PathVariable int roomId) {
+    public ResponseEntity<List<bookings>> getRoomBookings(@PathVariable long roomId) {
         try {
             List<bookings> result = hotelService.getRoomBookings(roomId);
             return ResponseEntity.ok(result);
