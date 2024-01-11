@@ -1,8 +1,6 @@
 package com.AhmedNaeim.assignment3.Controller;
 
 import com.AhmedNaeim.assignment3.Server.hotelService;
-import com.AhmedNaeim.assignment3.model.bookings;
-import com.AhmedNaeim.assignment3.model.rooms;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +21,9 @@ public class managers {
     }
 
     @GetMapping("/getBookings")
-    public ResponseEntity<List<List>> getRoomsOccupancy() {
+    public ResponseEntity<List<Object>> getRoomsOccupancy() {
         try {
-            List<List> result = hotelService.getRoomsOccupancy();
+            List<Object> result = hotelService.getRoomsOccupancy();
             return ResponseEntity.ok(result);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());

@@ -33,12 +33,12 @@ public class customers {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginCustomer(@RequestBody users e) {
+    public ResponseEntity<users> loginCustomer(@RequestBody users e) {
         try {
             users result = hotelService.loginCustomer(e.getName(), e.getPassword());
-            return ResponseEntity.ok(result == null ? "Wrong credentials" : "Logged in successfully");
+            return ResponseEntity.ok(result );
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during login.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 

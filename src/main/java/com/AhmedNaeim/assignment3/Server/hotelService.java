@@ -4,6 +4,7 @@ import com.AhmedNaeim.assignment3.model.bookings;
 import com.AhmedNaeim.assignment3.model.users;
 import com.AhmedNaeim.assignment3.model.rooms;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,6 +12,8 @@ import java.util.*;
 @Service
 
 public class hotelService {
+//    @Autowired
+//    private Hello hello;
     private static final Object lock = new Object();
     private static final List<users> staff = new ArrayList<>();
     private static final List<users> customers = new ArrayList<>();
@@ -51,8 +54,8 @@ public class hotelService {
     }
 
 
-    public List<List> getRoomsOccupancy() {
-        final List<List> roomsList = new ArrayList<>();
+    public List<Object> getRoomsOccupancy() {
+        final List<Object> roomsList = new ArrayList<>();
 
         for (int i = 0; i < room.size(); i++) {
             List<Object> x = Arrays.asList(room.get(i).getRoomID(), room.get(i).getAvailability());
